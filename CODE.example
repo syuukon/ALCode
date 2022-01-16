@@ -1,0 +1,35 @@
+// THIS IS THE CODE FOR THE IN-GAME 'CODE' SECTION.
+// Copy and paste the code below the start comment into the CODE window, then
+// click the 'engage' button to run the code.
+
+// EDIT THE STARTUP PATH TO YOUR LOCAL CODE FOLDER
+// This can be the game folder (type '/codes' in the game chat)
+// or a separate folder anywhere on your drives
+
+// It may be useful to have two paths if working with multiple operating systems.
+// Uncomment the one you need depending on which OS you are currently running,
+// and comment the other as needed, or if running a single OS, delete the line
+// for the OS you don't need.
+
+// Requires npm package 'fs': npm install fs
+// Run the above command from a command line while inside the root of this code folder.
+
+// ---------- START OF CODE ---------- //
+
+//const STARTUP = 'C:/Path/To/Folder/With/Entry/File.js'; // Path of your JavaScript (WINDOWS)
+//const STARTUP = '/home/Path/To/Folder/With/Entry/File.js'; // Path of your JavaScript (LINUX)
+
+const fs = require('fs');
+
+const reload = () => {
+    game_log("File change detected");
+    const data = fs.readFileSync(STARTUP, 'utf8');
+    const killId = setTimeout(function() {
+      for (let i = killId; i > 0; i--) clearInterval(i)
+    }, 3000);
+    eval.apply( window, [data] );    
+};
+reload();
+fs.watch(STARTUP, () => {
+    reload();
+});
