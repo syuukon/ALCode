@@ -16,20 +16,70 @@
 
 // ---------- START OF CODE ---------- //
 
-//const STARTUP = 'C:/Path/To/Folder/With/Entry/File.js'; // Path of your JavaScript (WINDOWS)
-//const STARTUP = '/home/Path/To/Folder/With/Entry/File.js'; // Path of your JavaScript (LINUX)
-
 const fs = require('fs');
+const os = require('os');
 
-const reload = () => {
-    game_log("File change detected");
-    const data = fs.readFileSync(STARTUP, 'utf8');
-    const killId = setTimeout(function() {
-      for (let i = killId; i > 0; i--) clearInterval(i)
-    }, 3000);
-    eval.apply( window, [data] );    
-};
-reload();
-fs.watch(STARTUP, () => {
-    reload();
-});
+let opSys = os.platform();
+
+let startup;
+let classType;
+
+function findOs() {
+  switch (opSys) {
+
+    case 'win32':
+      startup = 'D:/path/to/require/code'
+      break;
+    case 'linux':
+      startup = '/path/to/require/code';
+      break;
+  }
+  return;
+}
+findOs();
+
+function classToLoad() {
+
+  switch (character.ctype) {
+
+    case 'merchant':
+      classType = 'Merchant'
+      break;
+    case 'ranger':
+      classType = 'Ranger'
+      break;
+    case 'mage':
+      classType = 'Mage'
+      break;
+    case 'priest':
+      classType = 'Priest'
+      break;
+    case 'rogue':
+      classType = 'Rogue'
+      break;
+    case 'warrior':
+      classType = 'Warrior'
+      break;
+  }
+  return;
+}
+classToLoad();
+
+function loadLocalFile(filePath) {
+  let data = fs.readFileSync(filePath, 'utf8');
+  return data;
+}
+
+function loadRequirementsAndThenAllLocalFiles() {
+  loadAllLocalFiles(['require' + classType])
+  loadAllLocalFiles(requires);
+}
+
+function loadAllLocalFiles(files) {
+  for (let i in files) {
+    let data = loadLocalFile(startup + files[i] + '.js');
+    eval.apply(window, [data]);
+  }
+  game_log("Loaded " + files.length + " files");
+}
+loadRequirementsAndThenAllLocalFiles()
