@@ -10,11 +10,14 @@ In order to use this code, you will need to do a couple of things. First and for
 
 e.g.
 
+```
 case 'win32':
       startup = 'C:/Users/username/Documents/'
       break;
+
 case 'linux':
       startup = '/run/media/username/Documents/'
       break;
+```
       
 Once the CODE has been pasted and the startup path is correct, the CODE will load from the require<Class> files of the class you are running the code on. You can specify which files you would like to load on specific classes by editing the require files named requireClass (e.g. if you use a warrior, edit requireWarrior.js). Simply list the path to a file you would like to load on the relevant class, add new lines for a file created retroactively or remove existing lines for files if you don't need them or want to load them.
