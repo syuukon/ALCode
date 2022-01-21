@@ -13,6 +13,8 @@ function partyTime(name) {
 partyTime('Syuu2');
 partyTime('Syuu');
 //partyTime('Syuu6');
+partyTime('Syuu4');
+partyTime('Syuu5');
 
 function on_party_invite(name) {
   if (name === "Syuu6") {

@@ -15,7 +15,7 @@ function sellStuff() {
 }
 
 let keepGold = 1000000
-keep_whitelist = ["tracker", "hpot1", "mpot1", 'xpbooster', 'luckbooster', 'goldbooster']
+keep_whitelist = ["tracker", "hpot1", "mpot1", 'xpbooster', 'luckbooster', 'goldbooster', 'elixirluck']
 
 function xferStuff() {
     if (character.ctype != 'merchant') {

@@ -50,3 +50,23 @@ function draw_square(x1, y1, x2, y2) {
 	draw_line(x1, y1, x1, y2, 2);
 	draw_line(x2, y1, x2, y2, 2);
 };
+
+/* function draw_spawn_ranges(){
+	for (mon in G.maps[character.map].monsters) {
+		const boundary = G.maps[character.map].monsters[mon].boundary;
+		if (boundary) {
+			//Top
+			draw_line(boundary[0], boundary[1], boundary[2], boundary[1], 1, 0xBF00FF);
+			//Left
+			draw_line(boundary[0], boundary[1], boundary[0], boundary[3], 1, 0xBF00FF);
+			//Right
+			draw_line(boundary[2], boundary[3], boundary[0], boundary[3], 1, 0xBF00FF);
+			//Bottom
+			draw_line(boundary[2], boundary[3], boundary[2], boundary[1], 1, 0xBF00FF);
+		}
+	}
+  }
+
+function on_draw() {
+	draw_spawn_ranges()
+} */

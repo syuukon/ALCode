@@ -9,15 +9,15 @@ setInterval(function () {
         use_skill('use_hp');
         lastPotion = new Date();
     }
-    if (character.mp / character.max_mp < 0.50 && new Date() - lastPotion > 2000) {
+    if (character.mp / character.max_mp < 0.80 && new Date() - lastPotion > 2000) {
         use_skill('use_mp');
         lastPotion = new Date();
     }
-    if (character.mp / character.max_mp < 0.90 && new Date() - lastPotion > 4000) {
+    if (character.mp / character.max_mp < 0.95 && new Date() - lastPotion > 4000) {
         use_skill("regen_mp");
         lastPotion = new Date();
     }
-    if (character.hp / character.max_hp < 0.95 && new Date() - lastPotion > 4000) {
+    if (character.hp / character.max_hp < 0.96 && new Date() - lastPotion > 4000) {
         use_skill("regen_hp");
         lastPotion = new Date();
     }

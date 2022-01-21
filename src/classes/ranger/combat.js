@@ -5,12 +5,36 @@ var monster_targets = ["crab"];
 
 var state = "farm";
 
-var min_potions = 50; //The number of potions at which to do a resupply run.
-var purchase_amount = 9999; //How many potions to buy at once.
+var min_potions = 0; //The number of potions at which to do a resupply run.
+var purchase_amount = 0; //How many potions to buy at once.
 var potion_types = ["mpot1"]; //The types of potions to keep supplied.
 
 
 let lastPotion = 0;
+
+function circleCoords(x = 0, y = 0, radius = 50) {
+	let targetPos = {
+		x: x,
+		y: y
+	}
+	let theta = Math.atan2(character.y - targetPos.y, character.x - targetPos.x) + (180 / Math.PI)
+	targetPos.x += Math.cos(theta) * radius
+	targetPos.y += Math.sin(theta) * radius
+
+	move(targetPos.x, targetPos.y)
+}
+
+function circle() {
+	let partyThrowerPlayer = get_player('Syuu6')
+
+	if (null == partyThrowerPlayer) {
+		return
+	}
+
+	circleCoords(-1155, -60)
+}
+
+setInterval(circle, 120)
 
 //Movement And Attacking
 setInterval(function () {
@@ -35,6 +59,21 @@ setInterval(function () {
 	loot();
 
 }, 250); //Execute 2 times per second
+
+//Check for our own Merchant's Luck buff every 10 seconds, sets true/false in LocalStorage, along with current co-ordinates if false
+setInterval(function () {
+
+	//checks to see if the boost is not from our own merchant
+
+	if (character.name !== 'Syuu6') return;
+	if (!character.s.hasOwnProperty('mluck') && character.s.mluck.strong === 'true') {
+		set('leadermluck', 'false');
+		set('leaderposition', {x:character.x, y:character.y, map:character.map})
+	} else {
+		set('leadermluck', 'true');
+	}
+
+}, 10000)
 
 function state_controller() {
 	//Default to farming
@@ -64,20 +103,21 @@ function farm() {
 	//Attack or move to target
 	if (target != null) {
 		//Use Ranger Skills
-		if (character.mp > 400) {
+		if (character.mp > 400 && character.level >= 60) {
 			//Multishots (3-Shot and 5-Shot)
 			//Only if there is no master
 			if (!is_on_cooldown("attack")) {
 				let target = Object.values(parent.entities).filter(entity => entity.mtype === monster_targets[0] && entity.level <= 1 && is_in_range(entity, "3shot") && is_in_range(entity, "5shot"));
-/* 				if (target.length >= 5 && character.mp > G.skills["5shot"].mp) {
-					use_skill("5shot", target);
-					game_log("Used 5-Shot");
-				} else  */if (target.length >= 3 && character.mp > G.skills["3shot"].mp) {
+				/* 				if (target.length >= 5 && character.mp > G.skills["5shot"].mp) {
+									use_skill("5shot", target);
+									game_log("Used 5-Shot");
+								} else  */
+				if (target.length >= 3 && character.mp > G.skills["3shot"].mp) {
 					use_skill("3shot", target);
 					game_log("Used 3-Shot");
 				}
 			}
-		} else if (can_attack(target)) {
+		} else if (character.level < 65 && can_attack(target)) {
 			attack(target);
 		} else {
 			return target; //move_to_target(target);

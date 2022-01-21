@@ -14,11 +14,11 @@ cwhitelist = ['wbook0', 'intamulet', 'stramulet', 'dexamulet', 'intearring', 'st
 
 var purchase_pots = false; //Enable Potion Purchasing = true, Disable Potion Purchasing = false
 var buy_hp = false; //Allow HP Pot Purchasing = true, Disallow HP Pot Purchasing = false
-var buy_mp = false; //Allow MP Pot Purchasing = true, Disallow MP Pot Purchasing = false
+var buy_mp = true; //Allow MP Pot Purchasing = true, Disallow MP Pot Purchasing = false
 var hp_potion = 'hpot1'; //+200 HP Potion = 'hpot0', +400 HP Potion = 'hpot1' [always keep '' around it]
 var mp_potion = 'mpot1'; //+300 MP Potion = 'mpot0', +500 MP Potion = 'mpot1' [always keep '' around it]
 var pots_minimum = 50; //If you have less than this, you will buy more
-var pots_to_buy = 1000; //This is how many you will buy
+var pots_to_buy = 999; //This is how many you will buy
 // Potion Maintenance //
 
 useInvis = false; //[Rogue Skill] //Enable going invisible on cooldown = true, Disable going invisible on cooldown = false
@@ -79,7 +79,7 @@ setInterval(function() {
 
 }, (1 / character.frequency + 50) / 4); //base loop off character frequency
 
-setInterval(function() {
+/* setInterval(function() {
 
   //Party leader
   let leader = get_player(character.party);
@@ -89,7 +89,7 @@ setInterval(function() {
     //Move only if you are not already moving.
     move(leader.real_x + 30, leader.real_y);
 
-}, 250); //Loop every 250 milliseconds
+}, 250); //Loop every 250 milliseconds */
 
 setInterval(function() {
 
@@ -121,6 +121,17 @@ setInterval(function() {
   loot();
 
 }, 250); //Loop every 500 milliseconds
+
+//Check for Merchant's Luck buff every 5 seconds, sets true/false in LocalStorage
+setInterval(function() {
+
+  if (!character.s.hasOwnProperty('mluck')) {
+    set(character.name + '_mluck', 'mluck_false');
+  } else {
+    set(character.name + '_mluck', 'mluck_true');
+  }
+
+}, 5000)
 
 //--------------------------Grind Code End
 
